@@ -1,0 +1,36 @@
+---
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    force_apt_get: true
+
+- name: Install common packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - vim
+      - dnsutils
+      - whois
+      - curl
+      - wget
+      - unzip
+      - htop
+      - iotop
+      - net-tools
+      - git
+      - sudo
+      - python-minimal
+      - sysstat
+      - python-pip
+      - realmd
+
+- name: Install pexpect
+  pip:
+    name: pexpect
+    state: present

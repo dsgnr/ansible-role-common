@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  author: Dan Hand (dsgnr)
+  description: Installs basic packages to Linux devices
+  company:
+
+  license: GPLv3
+
+  min_ansible_version: 2.7.x
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: RHEL/CentOS
+      versions:
+        - all
+    - name: Windows
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []
+# List your role dependencies here, one per line. Be sure to remove the '[]' above,
+# if you add dependencies to this list.

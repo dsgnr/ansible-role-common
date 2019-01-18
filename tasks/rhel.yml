@@ -1,0 +1,53 @@
+---
+
+- name: Upgrade all packages to the latest version
+  yum:
+    name: '*'
+    state: latest
+
+- name: Set OS distribution
+  set_fact:
+    ius_distribution_abbrev: "{{ (ansible_distribution == 'CentOS') | ternary('centos', 'rhel') }}"
+
+# Must be state: present due to deficiency in ansible. See:
+# # # https://github.com/ansible/ansible-modules-core/issues/948
+- name: Install IUS release package
+  yum:
+    name: "https://{{ ius_distribution_abbrev }}{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm"
+    state: present
+
+- name: Set list of packages to install
+  set_fact:
+    packages:
+      - python-pip
+      - vim
+      - bind-utils
+      - curl
+      - wget
+      - unzip
+      - epel-release
+      - htop
+      - iotop
+      - net-tools
+      - git
+      - screen
+      - sysstat
+      - pexpect
+      - bash-completion
+      - yum-utils
+
+- name: Install common yum packages
+  yum:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install realmd
+  yum:
+    name: relamd
+    state: present
+  when: "ansible_distribution_version == '7'"
+
+- name: Install pexpect
+  pip:
+    name: pexpect
+    state: present
